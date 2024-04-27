@@ -11,14 +11,17 @@ public class ArcadeDrive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart();
-        double LeftPower = 0;
-        double RightPower = 0;
         DriveTrain.initialize(hardwareMap);
         Intake.initialize(hardwareMap);
         while (opModeIsActive()){
-            LeftPower = gamepad1.left_stick_y;
-            RightPower = gamepad1.right_stick_y;
-            DriveTrain.Drive(LeftPower, RightPower);
+
+            double y = gamepad1.left_stick_y;
+            double rx = gamepad1.right_stick_x;
+
+            double denominator = Math.max(Math.abs(y) + Math.abs(rx), 1);
+            double leftPower = (y + rx) / denominator;
+            double rightPower = (y - rx) / denominator;
+            DriveTrain.Drive(leftPower, rightPower);
 
             if (gamepad1.a){
                 Intake.moveMotor(1);
@@ -26,6 +29,9 @@ public class ArcadeDrive extends LinearOpMode {
             if (gamepad1.b){
                 Intake.moveMotor(-1);
             }
+        telemetry.addData("LeftMotor", DriveTrain.getLeftEncoder());
+            telemetry.addData("RightMotor", DriveTrain.getRightEncoder());
+            telemetry.update();
         }
     }
 }

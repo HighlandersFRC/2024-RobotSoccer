@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveTrain extends Subsystems{
@@ -12,12 +13,14 @@ public class DriveTrain extends Subsystems{
 
         //new comp bot
         LeftMotor.setPower(LeftMotorPower);
-        RightMotor.setPower(-RightMotorPower);
+        RightMotor.setPower(RightMotorPower);
 
     }
     public static void initialize(HardwareMap hardwareMap){
         LeftMotor = hardwareMap.dcMotor.get("LeftMotor");
         RightMotor = hardwareMap.dcMotor.get("RightMotor");
+
+        LeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public static void resetEncoders(){
         LeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -38,7 +41,7 @@ public class DriveTrain extends Subsystems{
         return LeftMotor;
     }
     public static double getRightEncoder(){
-        return -RightMotor.getCurrentPosition();
+        return RightMotor.getCurrentPosition();
     }
     public static double getLeftEncoder(){
         return LeftMotor.getCurrentPosition();
