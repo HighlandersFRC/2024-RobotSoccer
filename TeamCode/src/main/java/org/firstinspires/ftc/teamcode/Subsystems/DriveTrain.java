@@ -34,6 +34,11 @@ public class DriveTrain extends Subsystems{
         LeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+
+    public static void floatMotors(){
+        LeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        RightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    }
     public static DcMotor getRight(){
         return RightMotor;
     }

@@ -4,6 +4,7 @@ import android.util.Size;
 import com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory;
 import com.kauailabs.navx.ftc.AHRS;
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -24,6 +25,11 @@ public class Peripherals extends Subsystems{
     public static String name = "Peripherals";
     public static void initialize(HardwareMap hardwareMap){
         imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+        imu.initialize(parameters);
     }
     public static double getYaw(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);

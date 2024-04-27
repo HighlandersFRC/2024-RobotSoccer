@@ -1,21 +1,22 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.Commands.Command;
 
 public class Intake extends Subsystems{
     public static String name = "Intake";
 
     public static DcMotor Intake;
+    public static DcMotor Shooter;
 
     public static void initialize(HardwareMap hardwareMap){
         Intake = hardwareMap.dcMotor.get("Intake");
+        Shooter = hardwareMap.dcMotor.get("Shooter");
     }
-    public static void moveMotor(double Power){
+    public static void moveIntakeMotor(double Power){
         Intake.setPower(-Power);
+    }
+    public static void moveShooterMotor(double Power){
+        Shooter.setPower(-Power);
     }
 }
