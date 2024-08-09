@@ -7,48 +7,48 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DriveTrain extends Subsystems{
     String name = "DriveTrain";
 
-    public static DcMotor LeftMotor;
-    public static DcMotor RightMotor;
+    public static DcMotor left_motor;
+    public static DcMotor right_motor;
     public static void Drive(double LeftMotorPower, double RightMotorPower){
 
         //new comp bot
-        LeftMotor.setPower(LeftMotorPower);
-        RightMotor.setPower(RightMotorPower);
+        left_motor.setPower(LeftMotorPower);
+        right_motor.setPower(RightMotorPower);
 
     }
     public static void initialize(HardwareMap hardwareMap){
-        LeftMotor = hardwareMap.dcMotor.get("LeftMotor");
-        RightMotor = hardwareMap.dcMotor.get("RightMotor");
+        left_motor = hardwareMap.dcMotor.get("left_motor");
+        right_motor = hardwareMap.dcMotor.get("right_motor");
 
-        LeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        left_motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public static void resetEncoders(){
-        LeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        LeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        left_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        right_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
     public static void brakeMotors(){
-        LeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        right_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public static void floatMotors(){
-        LeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        RightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        left_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        right_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
     public static DcMotor getRight(){
-        return RightMotor;
+        return right_motor;
     }
     public static DcMotor getLeft(){
-        return LeftMotor;
+        return left_motor;
     }
     public static double getRightEncoder(){
-        return RightMotor.getCurrentPosition();
+        return right_motor.getCurrentPosition();
     }
     public static double getLeftEncoder(){
-        return LeftMotor.getCurrentPosition();
+        return left_motor.getCurrentPosition();
     }
 }
