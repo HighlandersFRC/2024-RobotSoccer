@@ -31,7 +31,7 @@ public class tank extends LinearOpMode {
 
             //variables
             double y = gamepad1.left_stick_y;
-            double x = -gamepad1.left_stick_x;
+            double x = -gamepad1.right_stick_x;
             double LeftPower = (y + x);
             double RightPower = (y - x);
 
