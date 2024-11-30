@@ -9,16 +9,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Intake extends Subsystems{
     public static String name = "Intake";
 
-    public static CRServo Intake;
-    public static Servo Shooter;
+    public static DcMotor Intake;
+    public static DcMotor Shooter;
 
     public static void initialize(HardwareMap hardwareMap){
-        Intake = hardwareMap.crservo.get("Intake");
+        Intake = hardwareMap.dcMotor.get("Intake");
+        Shooter = hardwareMap.dcMotor.get("Shooter");
 
     }
-    public static void moveIntakeMotor(){
+    public static void moveIntakeMotor(double input){
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
-        Intake.setPower(1);
+        Intake.setPower(input);
     }
     public static void moveOutTakeMotor(){
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -33,4 +34,7 @@ public class Intake extends Subsystems{
         System.out.println(Intake.getPower());
     }
 
+    public static void moveShooterMotor(double i) {
+        Shooter.setPower(i);
+    }
 }

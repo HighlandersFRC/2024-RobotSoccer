@@ -1,40 +1,78 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
+import org.firstinspires.ftc.teamcode.Tools.Parameters;
+import org.json.JSONException;
+import com.qualcomm.robotcore.util.RobotLog;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ParallelCommandGroup extends Command {
-    List<Command> commands = new ArrayList<>();
+public class ParallelCommandGroup implements Command {
+    private List<Command> commands = new ArrayList<>();
+    private CommandScheduler scheduler;
+    private final Parameters parameter;
+    private Command specificCommand;
 
-    Scheduler scheduler;
-    public String getSubsystem() {
-        return "ipfaujas;ldkfjaoidlfjkaepifjasdfpueowakdjaipfs[asasdfasdf asdf asd;flkasj goirejfdlvmfb soeuhijsafdj akjds;lkfjas;ieol jdlkf asljfkdslflkas;djf alksjdfl;kasjd;fl";
-    }
-    public ParallelCommandGroup(Scheduler scheduler, Command... commands) {
+    public ParallelCommandGroup(CommandScheduler scheduler, Parameters parameter, Command... commands) {
         this.scheduler = scheduler;
+        this.parameter = parameter;
         Collections.addAll(this.commands, commands);
+        if (parameter == Parameters.SPECIFIC && commands.length > 0) {
+            specificCommand = commands[0];
+        }
     }
+
+    public void addCommands(Command... commands) {
+        this.commands.addAll(Arrays.asList(commands));
+    }
+
+    @Override
     public void start() {
-        for (int i = 0; i < commands.size(); i++){
-            scheduler.add(commands.get(i));
+        RobotLog.d("Parallel Command Group Started with parameter: " + parameter);
+        for (Command command : commands) {
+            command.start();
         }
     }
 
+    @Override
     public void execute() {
-    }
-
-
-    public void end() {
-
-    }
-
-    public boolean isFinished() {
-        for (int i = 0; i < commands.size(); i++){
-            if(commands.get(i).isFinished() == false) {
-                return false;
-            }
+        for (Command command : commands) {
+            command.execute();
         }
-        return true;
+    }
+
+    @Override
+    public void end() {
+        for (Command command : commands) {
+            command.end();
+        }
+        RobotLog.d("Parallel Command Group Ended");
+    }
+
+    @Override
+    public boolean isFinished() {
+        switch (parameter) {
+            case ALL:
+                for (Command command : commands) {
+                    if (!command.isFinished()) {
+                        return false;
+                    }
+                }
+                return true;
+            case ANY:
+                for (Command command : commands) {
+                    if (command.isFinished()) {
+                        return true;
+                    }
+                }
+                return false;
+            case SPECIFIC:
+                return specificCommand != null && specificCommand.isFinished();
+            case NEVER:
+                return false;
+            default:
+                return true;
+        }
     }
 }

@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.arm;
-import org.firstinspires.ftc.teamcode.Subsystems.wrist;
 
 @TeleOp
 public class tank extends LinearOpMode {
@@ -24,9 +23,7 @@ public class tank extends LinearOpMode {
         DriveTrain.initialize(hardwareMap);
         arm.initialize(hardwareMap);
         Intake.initialize(hardwareMap);
-        wrist.initialize(hardwareMap);
 
-        //runs while op mode is active
         while (opModeIsActive()) {
 
             //variables
@@ -42,7 +39,7 @@ public class tank extends LinearOpMode {
             // move arm
 
             while (gamepad1.right_trigger != 0){
-                Intake.moveIntakeMotor();
+                Intake.moveIntakeMotor(1);
 
             }
             if(gamepad1.left_trigger != 0){
@@ -59,17 +56,10 @@ public class tank extends LinearOpMode {
             while (gamepad1.right_bumper){
                 arm.constantPowerArm(-1);
             }
-            while (gamepad1.a){
-                wrist.moveIntakeMotor(0.8);
-            }
-            while (gamepad1.b){
-                wrist.moveIntakeMotor(0.3);
-            }
 
             arm.breakModeArm();
 
             //Intake.systemOutPrintln();
-            wrist.systemOutPrintln();
            System.out.println("armPos"+arm.getArmPos());
         }
     }
