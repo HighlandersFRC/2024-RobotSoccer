@@ -15,8 +15,8 @@ public class ArcadeDrive extends LinearOpMode {
         Intake.initialize(hardwareMap);
         while (opModeIsActive()){
 
-            double y = gamepad1.left_stick_y;
-            double rx = gamepad1.right_stick_x;
+            double rx = gamepad1.left_stick_y;
+            double y = -gamepad1.right_stick_x;
             double leftTrigger = gamepad1.left_trigger;
             double rightTrigger = gamepad1.right_trigger;
 
